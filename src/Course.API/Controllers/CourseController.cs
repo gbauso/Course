@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Domain.Service;
+using Application.Command;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +22,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string[]))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> EnrollCourse([FromBody] CourseEnrollmentCommand command)
+        public async Task<IActionResult> EnrollCourse([FromBody] EnrollmentRequestCommand command)
         {
             await command.Validate();
             await _Mediator.Send(command);
