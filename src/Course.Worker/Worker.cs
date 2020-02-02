@@ -9,11 +9,11 @@ namespace Worker
 {
     public class Worker : IHostedService
     {
-        private readonly IQueueSubscribe _ServiceBus;
+        private readonly IQueueSubscriber _ServiceBus;
         private readonly IMessageSubscriber _Subscriber;
         private readonly CourseDbContext _Context;
 
-        public Worker(IQueueSubscribe serviceBus, IMessageSubscriber subscriber, CourseDbContext context)
+        public Worker(IQueueSubscriber serviceBus, IMessageSubscriber subscriber, CourseDbContext context)
         {
             _ServiceBus = serviceBus;
             _Subscriber = subscriber;

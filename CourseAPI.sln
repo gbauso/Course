@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course.Application", "src\C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course.Worker", "src\Course.Worker\Course.Worker.csproj", "{6AC7C6D2-D027-470A-B1D3-CF089615A6F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course.Job", "src\Course.Job\Course.Job.csproj", "{D96C42B7-C553-4B55-8409-6EBD094486A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +149,18 @@ Global
 		{6AC7C6D2-D027-470A-B1D3-CF089615A6F4}.Release|x64.Build.0 = Release|Any CPU
 		{6AC7C6D2-D027-470A-B1D3-CF089615A6F4}.Release|x86.ActiveCfg = Release|Any CPU
 		{6AC7C6D2-D027-470A-B1D3-CF089615A6F4}.Release|x86.Build.0 = Release|Any CPU
+		{D96C42B7-C553-4B55-8409-6EBD094486A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D96C42B7-C553-4B55-8409-6EBD094486A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D96C42B7-C553-4B55-8409-6EBD094486A5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D96C42B7-C553-4B55-8409-6EBD094486A5}.Debug|x64.Build.0 = Debug|Any CPU
+		{D96C42B7-C553-4B55-8409-6EBD094486A5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D96C42B7-C553-4B55-8409-6EBD094486A5}.Debug|x86.Build.0 = Debug|Any CPU
+		{D96C42B7-C553-4B55-8409-6EBD094486A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D96C42B7-C553-4B55-8409-6EBD094486A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D96C42B7-C553-4B55-8409-6EBD094486A5}.Release|x64.ActiveCfg = Release|Any CPU
+		{D96C42B7-C553-4B55-8409-6EBD094486A5}.Release|x64.Build.0 = Release|Any CPU
+		{D96C42B7-C553-4B55-8409-6EBD094486A5}.Release|x86.ActiveCfg = Release|Any CPU
+		{D96C42B7-C553-4B55-8409-6EBD094486A5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -157,5 +171,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{278528B0-776D-41ED-B2A2-FDCEC520B82F} = {CCFF18F3-4FC5-4190-9160-4A516CB693E9}
 		{6AC7C6D2-D027-470A-B1D3-CF089615A6F4} = {CCFF18F3-4FC5-4190-9160-4A516CB693E9}
+		{D96C42B7-C553-4B55-8409-6EBD094486A5} = {C7FC77EF-3645-479D-B245-184E17AEA81B}
 	EndGlobalSection
 EndGlobal

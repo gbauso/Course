@@ -4,11 +4,20 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MediatR;
+using AutoMapper;
 using API.Filter;
 using Microsoft.OpenApi.Models;
 using Application.Command;
 using CrossCutting.ServiceBus;
 using Infrastructure.ServiceBus.Azure;
+using Domain.Interfaces;
+using Infrastructure.Repository;
+using Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Application.Profiles;
+using Application.Query;
+using Infrastructure.Database.Query;
+using Infrastructure.Database.Query.Model;
 
 namespace API
 {
@@ -29,8 +38,22 @@ namespace API
                 cfg.Filters.Add(typeof(ErrorHandlingFilter));
             });
 
-            services.AddMediatR(typeof(EnrollmentRequestHandler));
+            services.AddAutoMapper(typeof(CourseProfile));
+            services.AddMediatR(typeof(EnrollmentRequestHandler),
+                                typeof(SyncDatabaseCommandHandler),
+                                typeof(CourseListQueryHandler),
+                                typeof(CourseQueryHandler));
+
             services.AddSingleton<IQueuePublisher, AzurePublisher>();
+
+            services.AddDbContext<CourseDbContext>(cfg =>
+            {
+                cfg.UseSqlServer(Configuration.GetConnectionString("CourseDbContext"),
+                    ac => ac.MigrationsAssembly("Course.Infrastructure"));
+            });
+
+            services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<IReadDatabase<Course>, CosmosDbManager<Course>>();
 
             services.AddSwaggerGen(c =>
             {

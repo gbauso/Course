@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Infrastructure.ServiceBus.Azure
 {
-    public class AzureSubscriber : IQueueSubscribe
+    public class AzureSubscriber : IQueueSubscriber
     {
         private readonly string _ConnectionString;
         private QueueClient _Client;
