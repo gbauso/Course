@@ -26,8 +26,8 @@ namespace Worker
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddSingleton<IQueueSubscribe, AzureSubscriber>();
-                    services.AddSingleton<IPublisher, AzurePublisher>();
+                    services.AddSingleton<IQueueSubscriber, AzureSubscriber>();
+                    services.AddSingleton<IQueuePublisher, AzurePublisher>();
                     services.AddSingleton<IMessageSubscriber, QueueSubscribe>();
 
                     services.AddSingleton<INotifier, MockEmailSender>();
@@ -40,7 +40,7 @@ namespace Worker
 
                     services.AddDbContext<CourseDbContext>(cfg =>
                     {
-                        cfg.UseSqlite(hostContext.Configuration.GetSection("ConnectionStrings")["CourseDbContext"],
+                        cfg.UseSqlServer(hostContext.Configuration.GetSection("ConnectionStrings")["CourseDbContext"],
                             ac => ac.MigrationsAssembly("Course.Infrastructure"));
                     }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
 
