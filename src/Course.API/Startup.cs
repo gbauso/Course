@@ -5,13 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MediatR;
 using API.Filter;
-using Domain.Interfaces;
-using Infrastructure.Repository;
-using Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Domain.Service;
-using Infrastructure.UnitOfWork;
 using Microsoft.OpenApi.Models;
+using Application.Command;
+using CrossCutting.ServiceBus;
+using Infrastructure.ServiceBus.Azure;
 
 namespace API
 {
@@ -32,21 +29,12 @@ namespace API
                 cfg.Filters.Add(typeof(ErrorHandlingFilter));
             });
 
-            services.AddMediatR(typeof(CourseEnrollmentCommandHandler));
-
-            services.AddDbContext<CourseDbContext>(cfg =>
-            {
-                cfg.UseSqlServer(Configuration.GetConnectionString("CourseDbContext"),
-                    ac => ac.MigrationsAssembly("Course.Infrastructure"));
-            });
-
-            services.AddScoped<ICourseRepository, CourseRepository>();
-            services.AddScoped<IStudentRepository, StudentRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddMediatR(typeof(EnrollmentRequestHandler));
+            services.AddSingleton<IPublisher, AzurePublisher>();
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Course", Version = "v1" });
+                c.SwaggerDoc("v2", new OpenApiInfo { Title = "Course", Version = "v2" });
             });
         }
 
@@ -62,10 +50,8 @@ namespace API
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Course V1");
+                c.SwaggerEndpoint("/swagger/v2/swagger.json", "Course V2");
             });
-
-            InitializeDatabase(app);
 
             app.UseHttpsRedirection();
 
@@ -77,14 +63,6 @@ namespace API
             {
                 endpoints.MapControllers();
             });
-        }
-
-        public void InitializeDatabase(IApplicationBuilder applicationBuilder)
-        {
-            var context = applicationBuilder.ApplicationServices.GetRequiredService<CourseDbContext>();
-
-            context.Database.EnsureCreated();
-            context.Database.Migrate();
         }
     }
 }

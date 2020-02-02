@@ -4,6 +4,7 @@ using MediatR;
 using Domain.Model;
 using CrossCutting.Exceptions;
 using Domain.Interfaces;
+using CrossCutting.ServiceBus;
 
 namespace Domain.Service
 {
@@ -12,14 +13,17 @@ namespace Domain.Service
         private readonly IStudentRepository _StudentRepository;
         private readonly ICourseRepository _CourseRepository;
         private readonly IUnitOfWork _UnitOfWork;
+        private readonly IPublisher _Publisher;
 
         public CourseEnrollmentCommandHandler(IStudentRepository studentRepository,
                                               ICourseRepository courseRepository,
-                                              IUnitOfWork unitOfWork)
+                                              IUnitOfWork unitOfWork,
+                                              IPublisher publisher)
         {
             _StudentRepository = studentRepository;
             _CourseRepository = courseRepository;
             _UnitOfWork = unitOfWork;
+            _Publisher = publisher;
         }
 
         public async Task<bool> Handle(CourseEnrollmentCommand request, CancellationToken cancellationToken)
@@ -39,6 +43,10 @@ namespace Domain.Service
 
             await _CourseRepository.Update(course);
             await _UnitOfWork.Commit();
+
+            await _Publisher.Publish(new BusMessage("NotifyEnrollment",
+                                                    new { Notification = new EmailNotification() }),
+                                     "course.queue");
 
             return true;
         }
