@@ -1,0 +1,9 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "{BLOB_STORAGE_CS}",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "AzureTableStorage": "{TABLE_STORAGE_CS}",
+    "DatabaseSyncUrl": "https://{API_URL}/api/job/sync"
+  }
+}
