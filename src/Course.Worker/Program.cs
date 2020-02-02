@@ -26,7 +26,7 @@ namespace Worker
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddSingleton<IBusSubscriber, AzureSubscriber>();
+                    services.AddSingleton<IQueueSubscribe, AzureSubscriber>();
                     services.AddSingleton<IPublisher, AzurePublisher>();
                     services.AddSingleton<IMessageSubscriber, QueueSubscribe>();
 

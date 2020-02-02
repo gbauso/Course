@@ -13,12 +13,12 @@ namespace Domain.Service
         private readonly IStudentRepository _StudentRepository;
         private readonly ICourseRepository _CourseRepository;
         private readonly IUnitOfWork _UnitOfWork;
-        private readonly IPublisher _Publisher;
+        private readonly IQueuePublisher _Publisher;
 
         public CourseEnrollmentCommandHandler(IStudentRepository studentRepository,
                                               ICourseRepository courseRepository,
                                               IUnitOfWork unitOfWork,
-                                              IPublisher publisher)
+                                              IQueuePublisher publisher)
         {
             _StudentRepository = studentRepository;
             _CourseRepository = courseRepository;
