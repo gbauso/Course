@@ -7,9 +7,9 @@ namespace Application.Command
 {
     public class EnrollmentRequestHandler : IRequestHandler<EnrollmentRequestCommand, bool>
     {
-        private readonly IPublisher _Publisher;
+        private readonly IQueuePublisher _Publisher;
 
-        public EnrollmentRequestHandler(IPublisher publisher)
+        public EnrollmentRequestHandler(IQueuePublisher publisher)
         {
             _Publisher = publisher;
         }

@@ -53,9 +53,9 @@ namespace Test.Helpers
             return course;
         }
 
-        public static IPublisher GetMockPublisher()
+        public static IQueuePublisher GetMockPublisher()
         {
-            var mock = new Mock<IPublisher>();
+            var mock = new Mock<IQueuePublisher>();
 
             return mock.Object;
         }

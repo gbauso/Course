@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.ServiceBus.Azure
 {
-    public class AzurePublisher : IPublisher
+    public class AzurePublisher : IQueuePublisher
     {
         private readonly string _ConnectionString;
         private QueueClient _Client;

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace CrossCutting.ServiceBus
 {
-    public interface IBusSubscriber : IDisposable
+    public interface IQueueSubscribe : IDisposable
     {
         Task Subscribe(IMessageSubscriber subscriber, string queue);
     }
