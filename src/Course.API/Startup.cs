@@ -30,7 +30,7 @@ namespace API
             });
 
             services.AddMediatR(typeof(EnrollmentRequestHandler));
-            services.AddSingleton<IPublisher, AzureServiceBus>();
+            services.AddSingleton<IPublisher, AzurePublisher>();
 
             services.AddSwaggerGen(c =>
             {

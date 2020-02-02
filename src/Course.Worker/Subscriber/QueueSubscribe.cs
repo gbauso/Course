@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Worker.Subscriber
 {
-    public class QueueSubscribe : ISubscriber
+    public class QueueSubscribe : IMessageSubscriber
     {
         private readonly IMediator _MediatR;
         private readonly ILogger<QueueSubscribe> _Logger;

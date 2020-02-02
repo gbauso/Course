@@ -9,37 +9,18 @@ using Newtonsoft.Json;
 
 namespace Infrastructure.ServiceBus.Azure
 {
-    public class AzureServiceBus : IServiceBus
+    public class AzureSubscriber : IBusSubscriber
     {
         private readonly string _ConnectionString;
         private QueueClient _Client;
 
-        public AzureServiceBus(IConfiguration configuration)
+        public AzureSubscriber(IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("ServiceBus");
             _ConnectionString = connectionString;
         }
 
-        public async Task Publish(BusMessage message, string queue)
-        {
-            _Client = new QueueClient(_ConnectionString, queue, ReceiveMode.PeekLock);
-
-            var busMessage = new Message
-            {
-                Body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message, Formatting.Indented))
-            };
-
-            try
-            {
-                await _Client.SendAsync(busMessage);
-            }
-            catch(Exception e)
-            {
-                throw new BusPublishException(e);
-            }
-        }
-
-        public Task Subscribe(ISubscriber handler, string queue)
+        public Task Subscribe(IMessageSubscriber handler, string queue)
         {
             _Client = new QueueClient(_ConnectionString, queue, ReceiveMode.PeekLock);
 

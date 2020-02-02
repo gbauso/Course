@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using CrossCutting.ServiceBus;
 using Domain.Interfaces;
 using Domain.Model;
 using Domain.Service;
@@ -52,13 +53,21 @@ namespace Test.Helpers
             return course;
         }
 
+        public static IPublisher GetMockPublisher()
+        {
+            var mock = new Mock<IPublisher>();
+
+            return mock.Object;
+        }
+
         public static IRequestHandler<CourseEnrollmentCommand, bool> GetRequestHandler(Guid? customCourse = null,
                                                                                        Guid? billId = null,
                                                                                        int capacity = 2)
         {
             var handler = new CourseEnrollmentCommandHandler(GetStudentRepository(billId),
                                                              GetCourseRepository(customCourse, billId, capacity),
-                                                             GetUnitOfWork());
+                                                             GetUnitOfWork(),
+                                                             GetMockPublisher());
 
             return handler;
         }
