@@ -8,7 +8,6 @@ namespace Infrastructure
     {
         public CourseDbContext(DbContextOptions options) : base(options)
         {
-
         }
 
         public DbSet<Course> Courses { get; set; }
@@ -52,6 +51,7 @@ namespace Infrastructure
             {
                 cfg.ToTable("Enrollment");
                 cfg.HasKey(i => new { i.CourseId, i.StudentId });
+                cfg.HasIndex(i => new { i.CourseId, i.StudentId }).IsUnique();
             });
                 
                 
