@@ -48,7 +48,6 @@ namespace Worker.Subscriber
                 catch (CommandException ce)
                 {
                     _Logger.LogError(ce, ce.Message);
-                    throw;
                 }
                 catch (Exception ex)
                 {
