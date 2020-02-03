@@ -10,12 +10,16 @@ namespace Job
 {
     public static class DatabaseSyncFunction
     {
-        private const string Cron = "0 */2 * * * *";
+        private const string Cron = "0 */10 * * * *";
+        private const string TableName = "JobExecution";
+        private const string TableConnectionSetting = "AzureTableStorage";
+        private const string JobUrlSetting = "DatabaseSyncUrl";
+
         private static HttpClient _Client = new HttpClient();
 
         [FunctionName("DatabaseSyncFunction")]
         public static async Task RunAsync([TimerTrigger(Cron)]TimerInfo myTimer,
-                                          [Table("JobExecution", Connection = "AzureTableStorage")] CloudTable cloudTable,
+                                          [Table(TableName, Connection = TableConnectionSetting)] CloudTable cloudTable,
                                           ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.UtcNow}");
@@ -31,7 +35,7 @@ namespace Job
 
         private static async Task<bool> InvokeSyncJob(DateTime lastExecution)
         {
-            var url = Environment.GetEnvironmentVariable("DatabaseSyncUrl");
+            var url = Environment.GetEnvironmentVariable(JobUrlSetting);
             var result = await _Client.PostAsJsonAsync(url, lastExecution);
 
             return result.IsSuccessStatusCode;

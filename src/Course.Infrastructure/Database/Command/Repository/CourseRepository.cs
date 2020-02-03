@@ -19,6 +19,7 @@ namespace Infrastructure.Repository
 
         public Task Update(Course course)
         {
+            course.SetUpdatedDate();
             _Context.Entry(course).State = EntityState.Modified;
 
             return Task.CompletedTask;
