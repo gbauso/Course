@@ -35,8 +35,8 @@ namespace Worker
 
         private async Task DatabaseInitializer()
         {
-            await _Context.Database.EnsureCreatedAsync();
             await _Context.Database.MigrateAsync();
+            await _Context.Database.EnsureCreatedAsync();
         }
     }
 }
