@@ -52,7 +52,10 @@ namespace Domain.Model
             var enrollment = new Enrollment(this, student);
             Enrollments.Add(enrollment);
             student.AddEnrollment(enrollment);
+        }
 
+        public void SetUpdatedDate()
+        {
             Updated = DateTime.UtcNow;
         }
 

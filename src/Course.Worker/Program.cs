@@ -27,7 +27,7 @@ namespace Worker
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddSingleton<IQueueSubscribe, AzureSubscriber>();
-                    services.AddSingleton<IPublisher, AzurePublisher>();
+                    services.AddSingleton<IQueuePublisher, AzurePublisher>();
                     services.AddSingleton<IMessageSubscriber, QueueSubscribe>();
 
                     services.AddSingleton<INotifier, MockEmailSender>();
