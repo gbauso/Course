@@ -18,6 +18,7 @@ using Application.Profiles;
 using Application.Query;
 using Infrastructure.Database.Query;
 using Infrastructure.Database.Query.Model;
+using System;
 
 namespace API
 {
@@ -49,7 +50,14 @@ namespace API
             services.AddDbContext<CourseDbContext>(cfg =>
             {
                 cfg.UseSqlServer(Configuration.GetConnectionString("CourseDbContext"),
-                    ac => ac.MigrationsAssembly("Course.Infrastructure"));
+                    mssqlOptions =>
+                    {
+                        mssqlOptions.MigrationsAssembly("Course.Infrastructure");
+                        mssqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 3,
+                            maxRetryDelay: TimeSpan.FromSeconds(10),
+                            errorNumbersToAdd: null);
+                    });
             });
 
             services.AddScoped<ICourseRepository, CourseRepository>();
