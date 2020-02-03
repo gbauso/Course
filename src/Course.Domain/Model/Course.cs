@@ -38,7 +38,7 @@ namespace Domain.Model
         public string Title { get; private set; }
         public int Capacity { get; private set; }
         public Guid LecturerId { get; private set; }
-        public DateTime Updated { get; set; }
+        public DateTime Updated { get; private set; }
 
         public virtual Lecturer Lecturer { get; private set; }
         public virtual ICollection<Enrollment> Enrollments { get; private set; }
@@ -52,7 +52,10 @@ namespace Domain.Model
             var enrollment = new Enrollment(this, student);
             Enrollments.Add(enrollment);
             student.AddEnrollment(enrollment);
+        }
 
+        public void SetUpdatedDate()
+        {
             Updated = DateTime.UtcNow;
         }
 
