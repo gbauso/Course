@@ -39,14 +39,25 @@ namespace Domain.Service
                 await _StudentRepository.Add(student);
             }
 
-            course.Enroll(student);
+            var success = true;
+            try
+            {
+                course.Enroll(student);
 
-            await _CourseRepository.Update(course);
-            await _UnitOfWork.Commit();
-
-            await _Publisher.Publish(new BusMessage("NotifyEnrollment",
-                                                    new { Notification = new EmailNotification() }),
-                                     "course.queue");
+                await _CourseRepository.Update(course);
+                await _UnitOfWork.Commit();
+            }
+            catch
+            {
+                success = false;
+                throw;
+            }
+            finally
+            {
+                await _Publisher.Publish(new BusMessage("NotifyEnrollment",
+                                                        new { Notification = new EmailNotification(success) }),
+                                         "course.queue");
+            }
 
             return true;
         }

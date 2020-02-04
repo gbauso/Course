@@ -6,7 +6,13 @@ namespace Domain
     {
         public EmailNotification()
         {
+
+        }
+
+        public EmailNotification(bool success)
+        {
             To = "student@email.com";
+            Subject = success ? "Enrollment Approved" : "Enrollment Rejected";
         }
         public EmailNotification(string to)
         {

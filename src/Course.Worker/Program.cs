@@ -12,6 +12,7 @@ using Domain.Service;
 using CrossCutting.ServiceBus;
 using Infrastructure.Email;
 using Serilog;
+using System;
 
 namespace Worker
 {
@@ -41,18 +42,26 @@ namespace Worker
                     services.AddDbContext<CourseDbContext>(cfg =>
                     {
                         cfg.UseSqlServer(hostContext.Configuration.GetSection("ConnectionStrings")["CourseDbContext"],
-                            ac => ac.MigrationsAssembly("Course.Infrastructure"));
+                            mssqlOptions =>
+                            {
+                                mssqlOptions.MigrationsAssembly("Course.Infrastructure");
+                                mssqlOptions.EnableRetryOnFailure(
+                                    maxRetryCount: 3,
+                                    maxRetryDelay: TimeSpan.FromSeconds(10),
+                                    errorNumbersToAdd: null);
+                            }
+                            );
                     }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
 
                     services.AddHostedService<Worker>();
-                }).ConfigureLogging((host, log) => 
+                }).ConfigureLogging((host, log) =>
                 {
                     var logger = new LoggerConfiguration()
                                 .WriteTo.Console()
                                 .WriteTo.File(host.Configuration.GetSection("Logging")["Path"])
                                 .CreateLogger();
 
-                    log.AddSerilog(logger);    
+                    log.AddSerilog(logger);
                 });
     }
 }

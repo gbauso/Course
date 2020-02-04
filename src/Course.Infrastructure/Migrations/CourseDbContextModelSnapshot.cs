@@ -58,6 +58,9 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StudentId");
 
+                    b.HasIndex("CourseId", "StudentId")
+                        .IsUnique();
+
                     b.ToTable("Enrollment");
                 });
 
