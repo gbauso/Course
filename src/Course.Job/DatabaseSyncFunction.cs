@@ -10,7 +10,7 @@ namespace Job
 {
     public static class DatabaseSyncFunction
     {
-        private const string Cron = "0 */10 * * * *";
+        private const string Cron = "0 */15 * * * *";
         private const string TableName = "JobExecution";
         private const string TableConnectionSetting = "AzureTableStorage";
         private const string JobUrlSetting = "DatabaseSyncUrl";
