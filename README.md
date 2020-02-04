@@ -20,7 +20,9 @@ Each part has its own branch.
 
 ### Visual Studio
 
-1. Replace the provided keys bellow on appsettings.json (Course.API and Course.Worker) and local.settings.json (Course.Job)
+1. Create a Queue with name "course.queue" at Azure Service Bus
+2. Create a Container with name "Course" and Partition key "/id" on Database id "report" at Azure Cosmos Db
+3. Replace the provided keys bellow on appsettings.json (Course.API and Course.Worker) and local.settings.json (Course.Job)
 * {SB_URI} - Service bus url (e.g https://course.servicebus.windows.net)
 * {SB_KEYNAME} - Service bus shared Key name
 * {SB_KEY} - Service bus shared key
@@ -29,8 +31,10 @@ Each part has its own branch.
 * {TABLE_STORAGE_CS} - connection string for Azure Cloud Table
 * {BLOB_STORAGE_CS} - connection string for Azure Blob Storage
 * {API_URL} - Base url of API
+* {LOGS_PATH} - Logs Path
 
-2. Mark the projects Course.API, Course.Worker and Course.Job as Start on "Set StartUp Projects..."
-3. Run the Solution
+4. Run Migrations on Course.Infrastructure
+5. Mark the projects Course.API, Course.Worker and Course.Job as Start on "Set StartUp Projects..."
+6. Run the Solution
 
 ### Docker (Soon)
