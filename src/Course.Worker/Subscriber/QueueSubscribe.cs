@@ -52,7 +52,6 @@ namespace Worker.Subscriber
                 catch (Exception ex)
                 {
                     _Logger.LogError(ex, ex.Message);
-                    throw;
                 }
             }
         }
